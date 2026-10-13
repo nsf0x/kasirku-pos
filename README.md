@@ -44,7 +44,7 @@ Proyek ini sudah dilengkapi dengan:
 - PHP 8.2+
 - Composer
 - Node.js 18+
-- MySQL 8 / SQLite untuk local dev
+- MySQL 8 (database utama)
 - Laravel Sail (opsional)
 
 ---
@@ -53,10 +53,12 @@ Proyek ini sudah dilengkapi dengan:
 
 1. Clone repositori
 2. Install dependency PHP dan NodeJS
-3. Copy `.env.example` ke `.env`
-4. Generate app key
-5. Jalankan migrasi dan seeder
-6. Build frontend assets
+3. Copy `.env.example` ke `.env`, lalu isi koneksi MySQL lokal
+4. Buat database MySQL `kasirku` dengan charset `utf8mb4`
+5. Generate app key
+6. Isi `BOOTSTRAP_OWNER_NAME`, `BOOTSTRAP_OWNER_EMAIL`, dan `BOOTSTRAP_OWNER_PASSWORD`
+7. Jalankan migrasi dan seeder untuk membuat akun owner pertama
+8. Build frontend assets
 
 Contoh:
 
@@ -66,12 +68,13 @@ npm install
 cp .env.example .env
 php artisan key:generate
 
-# Isi BOOTSTRAP_OWNER_NAME, BOOTSTRAP_OWNER_EMAIL, dan
-# BOOTSTRAP_OWNER_PASSWORD di .env sebelum seed pertama.
+# Buat schema MySQL sesuai DB_DATABASE di .env, lalu isi BOOTSTRAP_OWNER_*
 php artisan migrate --seed
 npm run build
 php artisan serve
 ```
+
+Test otomatis memakai SQLite in-memory; aplikasi saat dijalankan menggunakan MySQL dari `.env`.
 
 Setelah itu buka:
 - `http://localhost:8000`
